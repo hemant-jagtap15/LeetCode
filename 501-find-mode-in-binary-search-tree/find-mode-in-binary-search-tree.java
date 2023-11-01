@@ -14,28 +14,42 @@
  * }
  */
 class Solution {
+    ArrayList<Integer> list = new ArrayList<>();
+    int maxLen = 0;
+    int currLen = 0;
+    int currNum = 0;
+
     public int[] findMode(TreeNode root) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        preOrder(root, map);
-        int maxFreq = 0;
-        for(Integer key : map.keySet()) {
-            maxFreq = Math.max(maxFreq, map.get(key));
-        }
-        ArrayList<Integer> list = new ArrayList<>();
-        for(Integer key : map.keySet()) {
-            if(map.get(key) == maxFreq) list.add(key);
-        }
+        inOrder(root);
+
         int ans[] = new int[list.size()];
         for(int i = 0; i < list.size(); i++) {
             ans[i] = list.get(i);
         }
         return ans;
     }
-
-    public void preOrder(TreeNode root, HashMap<Integer, Integer> map) {
+ 
+    public void inOrder(TreeNode root) {
         if(root == null) return;
-        preOrder(root.left, map);
-        map.put(root.val, map.getOrDefault(root.val, 0) + 1);
-        preOrder(root.right, map);
+        inOrder(root.left);
+
+        int num = root.val;
+        if(num == currNum) {
+            currLen++;
+        } else {
+            currNum = num;
+            currLen = 1;
+        }
+
+        if(maxLen < currLen) {
+            list = new ArrayList<>();
+            maxLen = currLen;
+        }
+
+        if(maxLen == currLen) {
+            list.add(num);
+        }
+
+        inOrder(root.right);
     } 
 }
