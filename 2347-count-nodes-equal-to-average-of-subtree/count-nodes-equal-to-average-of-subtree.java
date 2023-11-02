@@ -14,33 +14,30 @@
  * }
  */
 class Solution {
+    class Pair {
+        int sum;
+        int count;
+        Pair(int sum, int count) {
+            this.sum = sum;
+            this.count = count;
+        }
+    }
+
     public int averageOfSubtree(TreeNode root) {
         int ans[] = new int[1];
-        inorder(root, ans);
+        postorder(root, ans);
         return ans[0];
     }
 
-    public void inorder(TreeNode root, int ans[]) {
-        if(root == null) return;
-        inorder(root.left, ans);
-        int count = countNodes(root);
-        int sum = sumNodes(root);
+    public Pair postorder(TreeNode root, int ans[]) {
+        if(root == null) return new Pair(0, 0);
+        Pair p1 = postorder(root.left, ans);
+        Pair p2 = postorder(root.right, ans);
+        int count = p1.count + p2.count + 1;
+        int sum = p1.sum + p2.sum + root.val;
         int avg = sum / count;
         ans[0] += root.val == avg ? 1 : 0;
-        inorder(root.right, ans);
-    }
-
-    public int countNodes(TreeNode root) {
-        if(root == null) return 0;
-        int leftCount = countNodes(root.left);
-        int rightCount = countNodes(root.right);
-        return leftCount + rightCount + 1;
-    }
-
-    public int sumNodes(TreeNode root) {
-        if(root == null) return 0;
-        int leftSum = sumNodes(root.left);
-        int rightSum = sumNodes(root.right);
-        return leftSum + rightSum + root.val;
+        return new Pair(sum, count);
+        
     }
 }
