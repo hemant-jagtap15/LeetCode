@@ -6,6 +6,5 @@ class Solution {
             else return true;
         }
         return t >= minDis;
-
     }
 }
