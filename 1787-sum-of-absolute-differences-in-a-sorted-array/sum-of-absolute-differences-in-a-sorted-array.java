@@ -3,20 +3,22 @@ class Solution {
         int n = nums.length;
         int result[] = new int[n];
         
-        int prefix[] = new  int[n+1];
-        prefix[0] = nums[0];
-        for(int i = 1; i < n; i++) {
-            prefix[i] = prefix[i-1] + nums[i];
+        int leftSum = 0;
+        int rightSum = 0;
+        for(int val : nums) {
+            rightSum += val;
         }
-        
+
         for(int i = 0; i < n; i++) {
             int backLeft = i - 0;
             int frontLeft = n - i - 1;
             int value = 0;
+            rightSum -= nums[i];
             if(i != 0) {
-                value += (backLeft*nums[i]) - prefix[i-1];
+                value += (backLeft*nums[i]) - leftSum;
             }
-            value += (prefix[n-1] - prefix[i]) - (frontLeft * nums[i]);
+            value += (rightSum) - (frontLeft * nums[i]);
+            leftSum += nums[i];
             result[i] = value;
     
         }
