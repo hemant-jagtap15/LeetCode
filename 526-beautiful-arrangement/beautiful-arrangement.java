@@ -20,37 +20,3 @@ class Solution {
         return cnt;
     }
 }
-
-// class Solution {
-// public:
-//     bool is_present(int ele, vector<int> &arr){
-//         for(int i=0; i<arr.size(); i++){
-//             if(arr[i]==ele) return true;
-//         }
-
-//         return false;
-//     }
-//     int find(int idx, int n, vector<int> arr){
-//         if(idx>n){
-//             return arr.size()==n;
-//         }
-
-//         int ways=0;
-
-//         for(int i=1; i<=n; i++){
-//             if((i%idx==0 || idx%i==0) && !is_present(i, arr)){
-//                 arr.push_back(i);
-//                 ways+=find(idx+1, n, arr);
-//                 arr.pop_back();
-//             }
-//         }
-
-//         return ways;
-//     }
-//     int countArrangement(int n) {
-//         vector<int> arr;
-//         int ans=find(1, n, arr);
-
-//         return ans;
-//     }
-// };
