@@ -11,7 +11,7 @@ class Solution {
             }
         }
         boolean vis[] = new boolean[n];
-        dfs(adj, 0, vis);
+        bfs(adj, vis);
 
         for(int i = 0; i < n; i++) {
             if(!vis[i]) return false;
@@ -20,12 +20,21 @@ class Solution {
         return true;
     }
 
-    public void dfs(ArrayList<ArrayList<Integer>> adj, int curr, boolean vis[]) {
-        vis[curr] = true;
-        for(int child : adj.get(curr)) {
-            if(!vis[child]) {
-                dfs(adj, child, vis);
-            }   
+    public void bfs(ArrayList<ArrayList<Integer>> adj, boolean vis[]) {
+        Queue<Integer> q =  new LinkedList<>();
+        q.add(0);
+        vis[0] = true;
+        
+        while(!q.isEmpty()) {
+            int curr = q.peek();
+            q.remove();
+
+            for(int child : adj.get(curr)) {
+                if(!vis[child]) {
+                    q.add(child);
+                    vis[child] = true;
+                }
+            }
         }
     }
 }
